@@ -37,7 +37,15 @@ FROM employee_records
 WHERE Position = 'Developer' AND Country = 'India';
 
 -- recent joiners
--- CREATE OR REPLACE VIEW recent_joiners AS
+CREATE OR REPLACE VIEW recent_joiners AS
 SELECT *
 FROM employee_records
 WHERE Joining_Date >= CURDATE() - INTERVAL 30 DAY;
+
+-- annual hiring trend
+SELECT 
+  YEAR(Joining_Date) AS year,
+  COUNT(*) AS hires
+FROM employee_records
+GROUP BY YEAR(Joining_Date)
+ORDER BY year;
